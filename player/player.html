@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+		<!-- insert script check for file browser capability -->
+	    <script>
+            // Check for the various File API support.
+            if (window.File && window.FileReader && window.FileList && window.Blob) {
+				// File APIs are supported
+				console.log("File APIs supported");
+            } else {
+				alert('File APIs NOT supported');
+            }
+        </script>
+		
+	<link rel="stylesheet" type="text/css" href="css/player.css">
+	<script type="text/javascript" src="js/player.js"></script>
+</head>
+<body>
+	<div id="select-file">
+		<!-- Browse and select the video file to play 5-Sept -->
+	        <input type="file" id="filez" name="files[]" accept="video/*">
+	</div>	
+
+	<div id="player">
+	
+		<!-- play the video -->
+		<div id="video-container">
+			<div id="screen">
+				<img id="screen-button" src="images/play.png">
+			</div>
+			<video id="videoz" poster="images/splash.png" loop = ""
+				src="videos/tinman.webm"> 
+				<!-- play the .webm video file OR; 
+				  display this error msg -->
+				HTML5 video tag not suported in browser.		
+			</video>
+		</div>
+
+		<div id="pbar-container">
+			<div id="pbar"></div>
+		</div>
+
+		<div id="buttons-container">
+			<img id="play-button" src="images/play.png">
+			<div id="time-field">
+				0:00 / 0:00
+			</div>
+			<img id="sound-button" src="images/sound.png">
+			<div id="sbar-container">
+				<div id="sbar"></div>
+			</div>
+			<img id="fullscreen-button" src="images/fullscreen.png">
+		</div>
+
+	</div>
+
+</body>
+</html>
