@@ -1,5 +1,9 @@
 <!DOCTYPE html>
 <html>
+	<!--
+	Version 3 of the HTML5 player added Ability to browse & select video file; must manually capture path in browser dialog and copy to the prompt.
+	Updated 8-Oct-2016
+	-->
 <head>
 		<!-- insert script check for file browser capability -->
 	    <script>
@@ -10,29 +14,38 @@
             } else {
 				alert('File APIs NOT supported');
             }
+
+			// Initialize global variables for video filepath
+			// Visible in JS functions. 8-Oct
+			var inputFilepath = "videos";  // the sub-folder containing video files
+			var localFolder = inputFilepath; // Used by handleFileSelect();
+			// 18-Oct localFolder is not available in the player.js function
+			// adding: "video\" created an exception that prevented initialization of the var
+			// use escape character "\\" to use the "\" in the string
+
         </script>
-		
-	<link rel="stylesheet" type="text/css" href="css/player.css">
-	<script type="text/javascript" src="js/player.js"></script>
+
+	<link rel="stylesheet" type="text/css" href="player.css">
+	<script type="text/javascript" src="player.js"></script>
 </head>
 <body>
 	<div id="select-file">
-		<!-- Browse and select the video file to play 5-Sept -->
+		<!-- Browse and select the video file 5-Sept -->
 	        <input type="file" id="filez" name="files[]" accept="video/*">
-	</div>	
+	</div>
 
 	<div id="player">
-	
+
 		<!-- play the video -->
 		<div id="video-container">
 			<div id="screen">
 				<img id="screen-button" src="images/play.png">
 			</div>
-			<video id="videoz" poster="images/splash.png" loop = ""
-				src="videos/tinman.webm"> 
-				<!-- play the .webm video file OR; 
+			<video id="videoz" poster="images/splash.jpg" loop = ""
+				src="videos/tinman.webm">
+				<!-- src="videos/tinman.webm": play the .webm video file OR;
 				  display this error msg -->
-				HTML5 video tag not suported in browser.		
+				HTML5 video tag not suported in browser.
 			</video>
 		</div>
 
