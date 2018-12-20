@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+	<!--
+	Version 3 of the HTML5 player added Ability to browse & select video file; must manually capture path in browser dialog and copy to the prompt.
+	Updated 8-Oct-2016
+	-->
+ 	<head>
+		<!--link rel="stylesheet" href="w3.css"-->
+		<link rel="stylesheet" type="text/css" href="f-player.css">
+		<script type="text/javascript" src="player.js"></script>
+	</head>
+
+	<body>
+		<div id="select-file">
+			<!-- Browse and select the video file 5-Sept-16 -->
+		  <input type="file" id="filez" name="files[]" accept="video/*">
+		</div>
+
+		<div id="player" >
+			<!-- play the video
+      https://css-tricks.com/NetMag/FluidWidthVideo/Article-FluidWidthVideo.php
+      -->
+  			<div id="video-container" >
+          <div id="screen">
+            <img id="screen-button" src="images/play.png">
+          </div>
+  				<video id="videoz"
+              poster="images/splash.png"
+  					  src="videos/tinman.webm"
+              loop = "" >
+  					<!-- https://developer.mozilla.org/en-US/docs/Web/HTML/Element/video -->
+  					     HTML5 video tag not suported in browser.
+  				 </video>
+  			</div>
+
+  			<div id="pbar-container">
+  				<div id="pbar"></div>
+  			</div>
+
+  			<div id="buttons-container">
+  				<img id="play-button" src="images/play.png">
+  				<div id="time-field">
+  					0:00 / 0:00
+  				</div>
+  				<img id="sound-button" src="images/sound.png">
+  				<div id="sbar-container">
+  					<div id="sbar"></div>
+  				</div>
+  				<img id="fullscreen-button" src="images/fullscreen.png">
+  			</div>
+		</div>
+
+	</body>
+</html>

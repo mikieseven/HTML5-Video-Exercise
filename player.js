@@ -1,11 +1,31 @@
+// Verify avaialble HTML5 DOM File API
+// https://developer.mozilla.org/en-US/docs/Extensions/Using_the_DOM_File_API_in_chrome_code
+if (!window.File || !window.FileReader || !window.FileList || !window.Blob) {
+    alert('File APIs NOT supported');
+  }
+// Initialize global variables for video filepath
+// Visible in JS functions. 8-Oct
+var inputFilepath = "videos";
+var localFolder = inputFilepath; // Used by handleFileSelect();
+var selectFile = "";
+var idispElem = "";
+var fCtr = 0;
+
+// Select Files container;
+document.addEventListener('DOMContentLoaded', function () {
+	selectFile = document.getElementById('filez');
+	selectFile.addEventListener('change', handleFileSelect, false);
+})
+
 window.addEventListener('load', function(eld) {
+	console.log("HTML5 Player-v3 -Browse input & set path");
 	console.log(eld.type);
 	console.log(eld);
-	
+
 	// Video Container
 	video = document.getElementById('videoz');
 	pauseScreen = document.getElementById('screen');
-	screenButton = document.getElementById('screen-button');
+	//screenButton = document.getElementById('screen-button');
 
 	// Progress Bar Container
 	pbarContainer = document.getElementById('pbar-container');
@@ -18,24 +38,26 @@ window.addEventListener('load', function(eld) {
 	sbarContainer = document.getElementById('sbar-container');
 	sbar = document.getElementById('sbar');
 	fullscreenButton = document.getElementById('fullscreen-button');
-	
+
 	// Select Files container;
 	// addEventListener to the input type='file' to invoke browse-file selection
-	selectFile = document.getElementById('select-file');
-	selectFile.addEventListener('change', handleFileSelect, false);
-	
+	/*selectFile = document.getElementById('select-file');
+	selectFile.addEventListener('change', handleFileSelect, false); */
+
 	video.load();  //load is a method of the video object
 	console.log('load complete ' + video.src); // monitor file load
+
 	video.addEventListener('canplay', function(cp) {
 		// var localFolder = prompt("Enter Video folder: ", localFolder);
-		console.log("canplay" + cp.type); // 'canplay' event object 
+		console.log("Status: "+cp.type); // 'canplay' event object
 		playButton.addEventListener('click', playOrPause, false);
 		pbarContainer.addEventListener('click', skip, false);
 		updatePlayer();
 		soundButton.addEventListener('click', muteOrUnmute, false);
 		sbarContainer.addEventListener('click', changeVolume, false);
 		fullscreenButton.addEventListener('click', fullscreen, false);
-		screenButton.addEventListener('click', playOrPause, false);
+		//screenButton.addEventListener('click', playOrPause, false);
+    pauseScreen.addEventListener('change', playOrPause, false);
 
 	}, false);
 
@@ -54,8 +76,8 @@ function playOrPause() {
 		playButton.src = 'images/play.png';
 		window.clearInterval(update);
 
-		pauseScreen.style.display = 'block';
-		screenButton.src = 'images/play.png';
+		pauseScreen.style.display = 'none';
+    screenButton.src = 'images/play.png';
 	}
 }
 
@@ -67,11 +89,11 @@ function updatePlayer() {
 		window.clearInterval(update);
 		playButton.src = 'images/replay.png';
 
-		pauseScreen.style.display = 'block';
+		pauseScreen.style.display = 'none';
 		screenButton.src = 'images/replay.png';
 	} else if (video.paused) {
 		playButton.src = 'images/play.png';
-		screenButton.src = 'images/play.png';
+    screenButton.src = 'images/play.png';
 	}
 }
 
@@ -100,7 +122,7 @@ function getFormattedTime() {
 }
 
 function muteOrUnmute(xv) {
-	console.log("mute "+xv); 
+	console.log("mute "+xv);
 	// declare the arg param to reference the event object in the function
 	if (!video.muted) {
 		video.muted = true;
@@ -114,7 +136,7 @@ function muteOrUnmute(xv) {
 }
 
 function changeVolume(ev) {
-	console.log("vol "+ev); // view the event object
+	console.log("volume level: " + ev); // view the event object
 	var mouseX = ev.pageX - sbarContainer.offsetLeft;
 	var width = window.getComputedStyle(sbarContainer).getPropertyValue('width');
 	width = parseFloat(width.substr(0, width.length - 2));
@@ -142,23 +164,15 @@ function handleFileSelect(evt) {
 	// 5-Sept-2016 AhHa! - the Event Object is passed from addEventListener
 	// declaring 'evt' as a param makes the object accessable in the function
 	console.log(evt); // view the event object 5-Oct
-	// Is the folder path stored as an object attribute; FILE API???  5-Oct
-	// Obtain video file path via prompt();
-	var localFolder = prompt("Video path: ", localFolder );
-	
+	localFolder = prompt("Video path: ", localFolder );  // 8-Oct
 	// get the video filename from .name attribute 5-Sept
 	var selectFileName = evt.target.files[0].name; // FileList in Event Object
-	
 	// append hardcode path to the file... 5-Oct
-	var vname = localFolder + "\\" + selectFileName;  
-	// Can we locate the file path from the FILE API? 5-Oct
-	
-	// set the src attribute for the video object prior to video.load();
-	// this will work with a fully qualified local "file:\\\" string
-	document.getElementsByTagName("video")[0].setAttribute("src", vname); 
-	
-	// log to verify the 'src' attribute is updated
-	console.log(document.getElementsByTagName("video")[0].getAttribute("src")+ " specified."); 
+	var vname = localFolder + "\\" + selectFileName;
+	// set the "src" attribute for the video object before video.load();
+	// fully qualified local "file:\\\" string
+	document.getElementsByTagName("video")[0].setAttribute("src", vname);
+  // document.getElementsByTagName("video")[0].setAttribute("poster", vname);
+	console.log(document.getElementsByTagName("video")[0].getAttribute("src")+ " specified.");
 
-} // end handleFileSelect
-		  
+	} // end handleFileSelect
